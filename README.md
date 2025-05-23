@@ -19,10 +19,10 @@ The **spawner** is in charge of creating and scheduling asynchronous tasks. The 
 Spawner, executor, and drop work in tandem to support efficient asynchronous operations. The spawner initiates tasks, the executor manages their execution, and drop handles cleanup once tasks are done or discarded. This coordinated workflow creates a robust and flexible environment for managing async execution in Rust.
 
 ## Before removing the drop  
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 ## After removing the drop  
-![alt text](image-3.png)
+![alt text](images/image-3.png)
 
 In the "before" image, the program halts at the end. This is because the drop function is triggered when a task is dropped, and it ensures that the task finishes before the program exits—guaranteeing all spawned tasks complete.
 
