@@ -1,15 +1,16 @@
 use futures::{
     future::{BoxFuture, FutureExt},
-    task::{waker_ref, ArcWake},
+    task::{ArcWake, waker_ref},
 };
-use module10::TimerFuture;
 use std::{
     future::Future,
-    sync::mpsc::{sync_channel, Receiver, SyncSender},
+    sync::mpsc::{Receiver, SyncSender, sync_channel},
     sync::{Arc, Mutex},
     task::Context,
     time::Duration,
 };
+// The timer we wrote in the previous section:
+use module10::TimerFuture;
 // The timer we wrote in the previous section:
 /// Task executor that receives tasks off of a channel and runs them.
 struct Executor {
@@ -53,7 +54,9 @@ impl Spawner {
             future: Mutex::new(Some(future)),
             task_sender: self.task_sender.clone(),
         });
-        self.task_sender.try_send(task).expect("too many tasks queued");
+        self.task_sender
+            .try_send(task)
+            .expect("too many tasks queued");
     }
 }
 
@@ -103,7 +106,7 @@ fn main() {
         TimerFuture::new(Duration::new(2, 0)).await;
         println!("Ravel: done!");
     });
-
+    println!("Ravel: hey hey!");
     // Drop the spawner so that our executor knows it is finished and won't
     // receive more incoming tasks to run.
     drop(spawner);
